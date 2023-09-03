@@ -1,0 +1,38 @@
+package com.alura.hotel.factory;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+
+public class ConnectionFactory {
+	
+	private DataSource dataSource;
+	
+	
+	
+	public ConnectionFactory() {
+		
+		var pooledDataSource = new ComboPooledDataSource();
+		pooledDataSource.setJdbcUrl("jdbc:mysql://localhost/hotelalura?useTimeZone=true&serverTimeZone=UTC");
+		pooledDataSource.setUser("root");
+		pooledDataSource.setPassword("D5t2D5y6-32");
+		pooledDataSource.setMaxPoolSize(10);
+		
+		this.dataSource = pooledDataSource;
+		
+	}
+	
+	public Connection creaConexion() {
+		
+		try {
+			return this.dataSource.getConnection();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+	}
+
+}
